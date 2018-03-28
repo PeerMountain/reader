@@ -1,0 +1,27 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+json-rpc = "*"
+werkzeug = "*"
+meinheld = "*"
+"e2919c3" = {path = "./himalaya-models", editable = true}
+msgpack-python = "*"
+happybase = "*"
+elasticsearch-dsl = "*"
+
+
+[dev-packages]
+
+ipython = "*"
+ipdb = "*"
+
+
+[requires]
+
+python_version = "3.6"

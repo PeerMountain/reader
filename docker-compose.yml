@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  reader:
+    build:
+      context: ./reader/
+      target: production
+    image: 'peer-mountain01:5005/teleferic-mvp/reader:${TAG:-latest}'
+    environment:
+      - HBASE_PORT=9090
+      - HBASE_HOSTNAME=localhost
+      - ES_URL=elasticsearch-proxy
+    networks:
+      - reader
+
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 128M
+      restart_policy:
+          condition: "on-failure"
+
+networks:
+  reader:
+    external: true
