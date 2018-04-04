@@ -1,0 +1,37 @@
+version: "3.4"
+
+services:
+  reader:
+    build:
+      context: ./reader/
+      target: development
+    image: 'reader:${TAG:-latest}'
+    ports:
+      - 8000:8000
+    environment:
+      - HBASE_PORT=9090
+      - HBASE_HOSTNAME=hbase
+      - ES_URL=elasticsearch
+    volumes:
+      - ./reader:/usr/src/app/
+    depends_on:
+      - elasticsearch
+      - hbase
+
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2'
+    environment:
+      - discovery.type=single-node
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+
+  hbase:
+    image: 'jonatasbaldin/hbase-standalone'
+    ports:
+      - '8080:8080'
+      - '8085:8085'
+      - '9090:9090'
+      - '16010:16010'
+      - '16020:16020'
+      - '16030:16030'
