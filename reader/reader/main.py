@@ -2,19 +2,10 @@ import os
 
 from werkzeug.wrappers import Request, Response
 from werkzeug.serving import run_simple
-
 from jsonrpc import JSONRPCResponseManager, dispatcher
+
 from himalaya_models import Message, Persona
-
-
-class Container:
-    @classmethod
-    def get(cls, **kwargs):
-        return None
-
-
-# Port should be 8000 for all internal web services.
-PORT = 8000
+from settings import PORT, ENVIRONMENT 
 
 
 @dispatcher.add_method
@@ -67,11 +58,6 @@ def persona(address=None, nickname=None) -> dict:
     }
 
 
-@dispatcher.add_method
-def container(container_hash) -> dict:
-    _container = Container.get(container_hash=container_hash)
-    if not _container:
-        raise Exception("Container not found")
     return {
         'response': _container.to_dict(),
         'status': 200,
