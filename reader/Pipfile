@@ -10,10 +10,10 @@ name = "pypi"
 json-rpc = "*"
 werkzeug = "*"
 meinheld = "*"
-"e2919c3" = {path = "./himalaya-models", editable = true}
-msgpack-python = "*"
+"e2919c4" = {path = "./himalaya-models", editable = true}
 happybase = "*"
 elasticsearch-dsl = "*"
+u-msgpack-python = "*"
 
 
 [dev-packages]

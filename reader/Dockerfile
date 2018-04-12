@@ -3,6 +3,8 @@ FROM python:3.6 as base
 # Bug in pipenv, where it does not find python in the PATH 
 RUN ln -sf $(which python) /bin/python
 
+EXPOSE 8000
+
 WORKDIR /usr/src/app
 COPY Pipfile* ./
 COPY himalaya-models himalaya-models/
