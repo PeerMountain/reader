@@ -78,9 +78,17 @@ def application(request):
 
     :param request: werkzeug.Request
     """
+
     response = JSONRPCResponseManager.handle(request.data, dispatcher)
     return Response(response.json, mimetype='application/json')
 
 
 if __name__ == '__main__':
-    run_simple('0.0.0.0', PORT, application)
+    run_parameters = {
+        'hostname': '0.0.0.0',
+        'port': PORT,
+        'application': application,
+        'use_reloader': True if ENVIRONMENT == 'DEVELOPMENT' else False
+    }
+
+    run_simple(**run_parameters)
