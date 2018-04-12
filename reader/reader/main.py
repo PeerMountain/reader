@@ -47,7 +47,7 @@ def message(hash=None, persona_sender=None, created_at=None) -> dict:
 
 
 @dispatcher.add_method
-def persona(address=None, nickname=None) -> dict:
+def persona(address=None, nickname=None, pubkey=None) -> dict:
     """persona
 
     Retrieves a persona's data from HBase
@@ -55,19 +55,17 @@ def persona(address=None, nickname=None) -> dict:
 
     :param address: ASCII representation of the user's address
     :param nickname: Nickname given to the persona
+    :param pubkey: ASCII represnetation of the user's pubkey
     :rtype: dict
     """
-    _persona = Persona.get(address=address) or Persona.get(nickname=nickname)
+
+    _persona = Persona.get(address=address) or Persona.get(nickname=nickname) or Persona.get(pubkey=pubkey)
+
     if not _persona:
-        raise Exception("Persona not found")
+        raise Exception('Persona not found')
+
     return {
         'response': _persona.to_dict(),
-        'status': 200,
-    }
-
-
-    return {
-        'response': _container.to_dict(),
         'status': 200,
     }
 
