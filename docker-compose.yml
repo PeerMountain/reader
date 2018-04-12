@@ -7,6 +7,8 @@ services:
       target: production
     image: 'peer-mountain01:5005/teleferic-mvp/reader:${TAG:-latest}'
     environment:
+      - PORT=8000
+      - ENVIRONMENT=PRODUCTION
       - HBASE_PORT=9090
       - HBASE_HOSTNAME=localhost
       - ES_URL=elasticsearch-proxy
