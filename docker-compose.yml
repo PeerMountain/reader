@@ -14,6 +14,8 @@ services:
       - ES_URL=elasticsearch-proxy
     networks:
       - reader
+      - hbase
+      - elasticsearch
 
     deploy:
       replicas: 2
@@ -26,4 +28,8 @@ services:
 
 networks:
   reader:
+    external: true
+  hbase:
+    external: true
+  elasticsearch:
     external: true
