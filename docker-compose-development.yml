@@ -1,4 +1,4 @@
-version: "3.4"
+version: '3.4'
 
 services:
   reader:
@@ -6,17 +6,18 @@ services:
       context: ./reader/
       target: development
     image: 'reader:${TAG:-latest}'
-    ports:
-      - 8000:8000
     environment:
+      - PORT=8000
+      - ENVIRONMENT=DEVELOPMENT
       - HBASE_PORT=9090
       - HBASE_HOSTNAME=hbase
       - ES_URL=elasticsearch
     volumes:
       - ./reader:/usr/src/app/
-    depends_on:
-      - elasticsearch
-      - hbase
+    networks:
+      - mvp
+    stdin_open: true
+    tty: true
 
   elasticsearch:
     image: 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2'
@@ -35,3 +36,7 @@ services:
       - '16010:16010'
       - '16020:16020'
       - '16030:16030'
+
+networks:
+  mvp:
+    external: true
