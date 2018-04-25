@@ -32,16 +32,19 @@ def message(hash=None, persona_sender=None, created_at=None) -> dict:
     if created_at:
         message_list = Message.filter(created_at=created_at)
 
-    if not (message or message_list):
-        raise Exception('Message not found')
-
-    response = {
-        'response': (
-            message.to_dict() if message
-            else [message.to_dict() for message in message_list]
-        ),
-        'status': 200,
-    }
+    if not message_list and not message:
+        response = {
+            'response': None,
+            'status': 404,
+        }
+    else:
+        response = {
+            'response': (
+                message.to_dict() if message
+                else [message.to_dict() for message in message_list]
+            ),
+            'status': 200,
+        }
 
     return response
 
@@ -58,16 +61,27 @@ def persona(address=None, nickname=None, pubkey=None) -> dict:
     :param pubkey: ASCII represnetation of the user's pubkey
     :rtype: dict
     """
+    _persona = None
 
-    _persona = Persona.get(address=address) or Persona.get(nickname=nickname) or Persona.get(pubkey=pubkey)
+    if address:
+        _persona = Persona.get(address=address)
+    if nickname:
+        _persona = Persona.get(nickname=nickname)
+    if pubkey:
+        _persona = Persona.get(pubkey=pubkey)
 
     if not _persona:
-        raise Exception('Persona not found')
+        response = {
+            'response': None,
+            'status': 404,
+        }
+    else:
+        response = {
+            'response': _persona.to_dict(),
+            'status': 200,
+        }
 
-    return {
-        'response': _persona.to_dict(),
-        'status': 200,
-    }
+    return response
 
 
 @Request.application

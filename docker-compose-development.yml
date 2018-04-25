@@ -26,6 +26,8 @@ services:
     ports:
       - '9200:9200'
       - '9300:9300'
+    networks:
+      - mvp
 
   hbase:
     image: 'jonatasbaldin/hbase-standalone'
@@ -36,6 +38,8 @@ services:
       - '16010:16010'
       - '16020:16020'
       - '16030:16030'
+    networks:
+      - mvp
 
 networks:
   mvp:
