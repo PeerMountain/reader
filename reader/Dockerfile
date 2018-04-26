@@ -14,8 +14,9 @@ RUN pipenv install --system
 
 from base as production
 COPY reader reader/
-CMD ["python", "reader/main.py"]
+COPY run.sh ./
+CMD ["bash", "run.sh"]
 
 FROM production as development
 RUN pipenv install --system --dev
-CMD ["python", "reader/main.py"]
+CMD ["bash", "run.sh"]
